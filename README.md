@@ -4,22 +4,22 @@ meteor-mongo-extensions
 Very simple implementation of some of mongodb aggregation framework functions for Meteor. Extends Collection on
 both Server and Client with 2 methods so far so that you can do:
 
-col = new Meteor.Collection "name"
+    col = new Meteor.Collection "name"
 
-if Meteor.isClient
-    col.distinct "Field Name", (error, result)->
+    if Meteor.isClient
+        col.distinct "Field Name", (error, result)->
+            console.dir result
+
+        col.aggregate pipeline, (error, result)->
+            console.dir result
+
+
+    if Meteor.isServer
+        result = col.distinct "Field Name"
         console.dir result
 
-    col.aggregate pipeline, (error, result)->
+        result = col.aggregate pipeline
         console.dir result
-
-
-if Meteor.isServer
-    result = col.distinct "Field Name"
-    console.dir result
-
-    result = col.aggregate pipeline
-    console.dir result
 
 
 If called on the client, it simply passes the call to the server collection - so that's mostly a convenience wrapper.
