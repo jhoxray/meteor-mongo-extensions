@@ -1,6 +1,6 @@
 #hacky advanced mongo definitions based on https://github.com/meteor/meteor/pull/644
-
 if Meteor.isServer
+
   path = __meteor_bootstrap__.require("path")
   MongoDB = __meteor_bootstrap__.require("mongodb")
   Future = __meteor_bootstrap__.require(path.join("fibers", "future"))
@@ -41,4 +41,3 @@ if Meteor.isServer
       _futureWrapper @_name, "aggregate", pipeline
 
 
-    

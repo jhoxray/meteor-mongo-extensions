@@ -24,3 +24,5 @@ both Server and Client with 2 methods so far so that you can do:
 
 If called on the client, it simply passes the call to the server collection - so that's mostly a convenience wrapper.
 No visibility permissions are checked, so be careful with what data you may want to expose.
+
+This package is MIT Licensed. Do whatever you like with it but any responsibility for doing so is your own.
