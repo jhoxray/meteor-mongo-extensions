@@ -13,3 +13,9 @@ if Meteor.isClient
 
     aggregate: (pipeline, callback) ->
       Meteor.apply "_callAdvancedDBMethod", [@_name, "aggregate", pipeline], {wait:false, onResultReceived: callback}
+
+    mapReduce1: (map, reduce, options, callback) ->
+      Meteor.apply "_callAdvancedDBMethod", [@_name, "mapReduce", [map, reduce, options]], {wait:false, onResultReceived: callback}
+
+    mapReduce: (map, reduce, options, callback)->
+      Meteor.apply "_callMapReduce", [@_name, map, reduce, options], {wait:false, onResultReceived: callback}
