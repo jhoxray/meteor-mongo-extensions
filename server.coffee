@@ -55,10 +55,7 @@ if Meteor.isServer
       if result[1].collectionName
         col = new Meteor.Collection result[1].collectionName
         Meteor.publish result[1].collectionName, ->
-          #console.dir col
-          #allContents = col.find({"_id" : {$ne: ""}}).fetch()
-          #console.dir allContents
-          col.find {"_id" : {$ne: ""}}
+          col.find {"_id" : {$ne: ""}} # hack to allow Meteor fetching the values as apparently it does not support empty ids
       result[1]
 
 
