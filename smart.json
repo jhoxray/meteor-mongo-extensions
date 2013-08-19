@@ -3,7 +3,7 @@
     "description": "Straightforward implementation of mongodb aggregation framework. Supports mapReduce, aggregate and distinct.",
     "homepage": "https://github.com/jhoxray/meteor-mongo-extensions",
     "author": "Jay Ho (http://superstringsoftware.com)",
-    "version": "0.1.5",
+    "version": "0.1.6",
     "git": "https://github.com/jhoxray/meteor-mongo-extensions.git",
     "packages": {
 
