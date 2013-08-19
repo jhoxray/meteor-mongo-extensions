@@ -2,7 +2,7 @@ Package.describe({
     summary: "Straightforward implementation of mongodb aggregation framework"
 });
 
-Npm.depends({mongodb: "1.2.13"});
+Npm.depends({mongodb: "1.3.17"});
 
 Package.on_use(function (api, where) {
     api.use('coffeescript', ['client', 'server']);

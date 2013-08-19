@@ -13,18 +13,14 @@ if Meteor.isServer
     collectionName = if (typeof collection) == "string" then  collection else collection._name
 
     #tl?.debug "future Wrapper called for collection " + collectionName + " command: " + commandName + " args: " + args
+    
+    coll1 = col.find()._mongo.db.collection(collectionName)
+
     future = new Future
-    col.find()._mongo.db.collection(collectionName,(err,collection)=>
-      future.throw err if err
-      collection[commandName](args, (err,result)=>
-        future.throw(err) if err
-        future.ret([true,result])
-      )
-    )
+    cb = future.resolver()
+    coll1[commandName](args, cb)
     result = future.wait()
-    #console.dir "Result from the Future Wrapper is: " + result
-    throw result[1] if !result[0]
-    result[1]
+    
 
   # exposing the methods to the client
   Meteor.methods
