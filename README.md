@@ -16,6 +16,10 @@ both Server and Client with 3 methods so far so that you can do:
         col.aggregate pipeline, (error, result)->
             console.dir result
 
+        # just an example - map and reduce need to be defined as strings
+        map = "function() {emit(this.Region, this.Amount);}"
+        reduce = "function(reg, am) { return Array.sum(am);};"
+
         col.mapReduce map, reduce, {out: "out_collection_name", verbose: true}, (err,res)->
             console.dir res.stats # statistics object for running mapReduce
             col = new Meteor.Collection res.collectionName
