@@ -1,8 +1,7 @@
 meteor-mongo-extensions
 =======================
 
-Updated to work with Meteor 0.6.5 with slightly more elegant aggregation code. NOTE: MapReduce is currently broken,
-only aggregate and distinct should work.
+MapReduce is fixed and working as described below.
 
 Very simple implementation of some of mongodb aggregation framework functions for Meteor. Extends Collection on
 both Server and Client with 3 methods so far so that you can do:

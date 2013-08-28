@@ -1,3 +1,4 @@
+tl = TLog?.getLogger()
 #hacky advanced mongo definitions based on https://github.com/meteor/meteor/pull/644
 if Meteor.isServer
 
@@ -32,17 +33,17 @@ if Meteor.isServer
       col = if (typeof collection) == "string" then  _dummyCollection_ else collection
       collectionName = if (typeof collection) == "string" then  collection else collection._name
 
-      #tl?.debug "callMapReduce called for collection " + collectionName + " map: " + map + " reduce: " + reduce + " options: #{JSON.stringify(options)}"
+      tl?.debug "callMapReduce called for collection " + collectionName + " map: " + map + " reduce: " + reduce + " options: #{JSON.stringify(options)}"
+      coll1 = col.find()._mongo.db.collection(collectionName)
+
       future = new Future
-      col.find()._mongo.db.collection(collectionName,(err,coll)->
-        future.throw err if err
-        coll.mapReduce(map, reduce, options, (err,result,stats)->
+      #cb = future.resolver()
+      coll1.mapReduce map, reduce, options, (err,result,stats)->
           #tl?.debug "Inside MapReduce callback now!"
           future.throw(err) if err
           res = {collectionName: result.collectionName, stats: stats}
-          future.ret([true,res])
-        )
-      )
+          future.return [true,res]
+
       result = future.wait() #
       #console.log "Result from the callMapReduce is: "
       #console.dir result[1]
@@ -53,6 +54,7 @@ if Meteor.isServer
         Meteor.publish result[1].collectionName, ->
           col.find {"_id" : {$ne: ""}} # hack to allow Meteor fetching the values as apparently it does not support empty ids
       result[1]
+
 
 
   # Extending Collection on the server
