@@ -41,7 +41,10 @@ if Meteor.isServer
       coll1.mapReduce map, reduce, options, (err,result,stats)->
           #tl?.debug "Inside MapReduce callback now!"
           future.throw(err) if err
-          res = {collectionName: result.collectionName, stats: stats}
+          if result.collectionName
+            res = {collectionName: result.collectionName, stats: stats}
+          else
+            res = result
           future.return [true,res]
 
       result = future.wait() #
