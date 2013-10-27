@@ -43,4 +43,7 @@ mapReduce call is slightly more advanced: as results of running mapReduce are pu
 it is automatically published on the server so you can subscribe on the client, (theoretically) providing
 reactivity for subsequent calls.
 
+You can also perform Mongo's inline mapReduce query by not specifying 'out' option at all or by setting it
+to `out: {inline: 1}`. The result must fit within the maximum size of a BSON document (which is 16 megabytes by default).
+
 This package is MIT Licensed. Do whatever you like with it but any responsibility for doing so is your own.
