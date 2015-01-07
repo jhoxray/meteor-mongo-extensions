@@ -21,6 +21,20 @@ if Meteor.isServer
     cb = future.resolver()
     coll1[commandName](args, cb)
     result = future.wait()
+
+  # Wrapper of the call to the db into a Future for calls with queries like distinct
+  _distinctFutureWrapper = (collection, commandName, query, args)->
+    col = if (typeof collection) == "string" then  _dummyCollection_ else collection
+    collectionName = if (typeof collection) == "string" then  collection else collection._name
+
+    #tl?.debug "distinct Future Wrapper2 called for collection " + collectionName + " command: " + commandName + " query: "+JSON.stringify(query)+" args: " + JSON.stringify(args)
+    
+    coll1 = col.find()._mongo.db.collection(collectionName)
+
+    future = new Future
+    cb = future.resolver()
+    coll1[commandName](args, query, cb)
+    result = future.wait()
     
 
   # exposing the methods to the client
@@ -60,9 +74,9 @@ if Meteor.isServer
   # Extending Collection on the server
   _.extend Meteor.Collection::,
 
-    distinct: (key) ->
+    distinct: (key, query) ->
       #_collectionDistinct @_name, key, query, options
-      _futureWrapper @_name, "distinct", key
+      _distinctFutureWrapper @_name, "distinct", query||{}, key
 
     aggregate: (pipeline) ->
       _futureWrapper @_name, "aggregate", pipeline
