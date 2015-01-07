@@ -14,7 +14,6 @@ if Meteor.isServer
     collectionName = if (typeof collection) == "string" then  collection else collection._name
 
     #tl?.debug "future Wrapper called for collection " + collectionName + " command: " + commandName + " args: " + args
-    console.log "future Wrapper called for collection " + collectionName + " command: " + commandName + " args: " + JSON.stringify(args)
     
     coll1 = col.find()._mongo.db.collection(collectionName)
 
